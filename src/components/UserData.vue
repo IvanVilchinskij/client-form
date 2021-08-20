@@ -219,6 +219,7 @@ export default {
           this.$v.form.nameData.$reset();
           this.$v.form.birthdayData.$reset();
           this.$v.form.clientData.$reset();
+          this.$v.form.telData.$reset();
         }, 0);
       } else {
         this.$v.form.surnameData.$touch();
