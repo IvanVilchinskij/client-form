@@ -69,6 +69,18 @@
             }
         }
 
+        select {
+            height: 2.8125rem;
+
+            @media (max-width: 767px) {
+                height: 2.375rem;
+            }
+
+            @media (max-width: 575px) {
+                height: 2.08rem;
+            }
+        }
+
         input {
             &[type="radio"], &[type='date'] {
                 height: 2.8125rem;
@@ -88,11 +100,11 @@
                 height: calc(2 * 2.8125rem);
 
                 @media (max-width: 767px) {
-                    height: calc(2 * 2.375rem);
+                    height:  2.375rem;
                 }
 
                 @media (max-width: 575px) {
-                    height: calc(2 * 2.08rem);
+                    height:  2.08rem;
                 }
             }
         }
