@@ -1,0 +1,26 @@
+.modal {
+    position: fixed;
+    top: calc(-100% + 4rem);
+    left: 50%;
+    z-index: 100;
+    display: block;
+    background-color: #99ff99;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    line-height: 90%;
+    color: $text-color;
+    width: 15.625em;
+    text-align: center;
+    padding: 1.5em 0;
+    border-radius: .625em;
+    margin: 4rem auto 0;
+    opacity: 0;
+
+    transition: top .7s ease-in, opacity .3s ease-in;
+
+    &.show {
+        top: 0;
+        opacity: 1;
+    }
+   
+}
