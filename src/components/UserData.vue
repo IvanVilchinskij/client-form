@@ -60,7 +60,7 @@
         name="tel"
         id="tel"
         type="text"
-        placeholder="Телефон"
+        placeholder="Телефон*"
         :class="$v.form.telData.$error ? 'is-invalid' : ''"
         v-model.trim="form.telData"
         @keypress="onlyNumber($event)"
@@ -72,6 +72,9 @@
           $v.form.telData.$dirty &&
           (!$v.form.telData.minLength || !$v.form.telData.maxLength)
         "
+      />
+      <RequiredTextError
+        v-if="$v.form.telData.$dirty && !$v.form.telData.required"
       />
     </div>
     <div class="form__group">
@@ -201,6 +204,7 @@ export default {
         required,
       },
       telData: {
+        required,
         minLength: minLength(11),
         maxLength: maxLength(11),
       },
@@ -223,7 +227,7 @@ export default {
         this.form.nameData = null;
         this.form.patronymicData = "";
         this.form.birthdayData = null;
-        this.form.telData = "";
+        this.form.telData = null;
         this.form.doctorData = "";
         this.form.clientData = [];
         this.form.agreeSMS = false;
@@ -241,12 +245,14 @@ export default {
         this.$v.form.nameData.$touch();
         this.$v.form.birthdayData.$touch();
         this.$v.form.clientData.$touch();
+        this.$v.form.telData.$touch();
 
         if (
           !this.$v.form.surnameData.$error &&
           !this.$v.form.nameData.$error &&
           !this.$v.form.birthdayData.$error &&
-          !this.$v.form.clientData.$error
+          !this.$v.form.clientData.$error &&
+          !this.$v.form.telData.$error
         ) {
           return true;
         } else {

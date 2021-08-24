@@ -48,7 +48,7 @@ export default {
         nameData: null,
         patronymicData: "",
         birthdayData: null,
-        telData: "7",
+        telData: null,
         doctorData: "",
         clientData: [],
         agreeSMS: false,
