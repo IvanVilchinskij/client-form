@@ -1,3 +1,3 @@
 <template>
-  <div class="input-error">Введите корректный номер</div>
+  <div class="form__input-error">Введите корректный номер</div>
 </template>

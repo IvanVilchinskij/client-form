@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <img src="./assets/img/bg.jpg" alt="bg" class="bg" />
-    <div class="container">
-      <h1 class="title">Создание клиента</h1>
+    <div class="content">
       <div class="client-form">
+        <h1 class="client-form__title">Создание клиента</h1>
         <Form :defValidForm="defValidForm" />
+      </div>
+      <div class="bg">
+        <img src="./assets/img/bg.png" alt="main-bg" />
       </div>
     </div>
     <SuccessModal :isValidForm="isValidForm" />
@@ -40,6 +42,5 @@ export default {
 
 @import "./assets/styles/app.scss";
 @import "./assets/styles/form.scss";
-@import "./assets/styles/errors.scss";
 @import "./assets/styles/modal.scss";
 </style>

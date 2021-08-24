@@ -1,4 +1,4 @@
 <template>
-  <div class="input-error">Необходимо заполнить поле</div>
+  <div class="form__input-error">Необходимо заполнить поле</div>
 </template>
 

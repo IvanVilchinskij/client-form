@@ -4,22 +4,26 @@
     left: 50%;
     z-index: 100;
     display: block;
-    background-color: #99ff99;
+    background-color: $hover-btn;
     transform: translateX(-50%);
     font-size: 1.5rem;
     line-height: 90%;
     color: $text-color;
     width: 15.625em;
     text-align: center;
-    padding: 1.5em 0;
+    padding: 1.5em 1em;
     border-radius: .625em;
     margin: 4rem auto 0;
     opacity: 0;
     transition: top .7s ease-in, opacity .3s ease-in;
 
+    @media (min-width: 1921px) {
+        font-size: calc(1.5 * 16 * 100vw/1440);
+        margin: calc(4 * 16 * 100vw/1440) auto 0;
+    }
+
     @media (max-width: 575px) {
-        font-size: .875rem;
-        width: 50%;
+        font-size: 1rem;
         margin: 2rem auto 0;
     }
 

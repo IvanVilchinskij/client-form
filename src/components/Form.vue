@@ -1,24 +1,30 @@
 <template>
-  <form class="form" @submit.prevent="createdClient($event)">
-    <h2 class="form__title">Личные данные:</h2>
-    <UserData ref="UserData" :noNumber="noNumber" :onlyNumber="onlyNumber" />
-    <h2 class="form__title">Адрес:</h2>
+  <form class="form" @submit.prevent="createdClient">
+    <UserData
+      v-show="steps[1]"
+      ref="UserData"
+      :noNumber="noNumber"
+      :onlyNumber="onlyNumber"
+      :addToFormData="addToFormData"
+      :changeFormStep="changeFormStep"
+    />
     <AddressData
+      v-show="steps[2]"
       ref="AddressData"
       :noNumber="noNumber"
       :onlyNumber="onlyNumber"
+      :addToFormData="addToFormData"
+      :changeFormStep="changeFormStep"
     />
-    <h2 class="form__title">Паспорт:</h2>
     <PasportData
+      v-show="steps[3]"
       ref="PasportData"
       :noNumber="noNumber"
       :onlyNumber="onlyNumber"
+      :isValidForm="isValidForm"
+      :addToFormData="addToFormData"
+      :changeFormStep="changeFormStep"
     />
-    <div class="form__bottom">
-      <button type="submit" class="form__btn">Создать</button>
-      <p class="form__sub-text">* - поля обязательные для заполнения</p>
-    </div>
-    <InvalidFormTextError v-if="isValidForm === null ? false : !isValidForm" />
   </form>
 </template>
 
@@ -26,17 +32,43 @@
 import UserData from "./UserData";
 import AddressData from "./AddressData";
 import PasportData from "./PasportData";
-import InvalidFormTextError from "./InvalidFormTextError";
 
 export default {
   props: ["defValidForm"],
   data() {
     return {
       isValidForm: null,
+      steps: {
+        1: true,
+        2: false,
+        3: false,
+      },
+      formData: {
+        surnameData: null,
+        nameData: null,
+        patronymicData: "",
+        birthdayData: null,
+        telData: "7",
+        doctorData: "",
+        clientData: [],
+        agreeSMS: false,
+        gendere: "male",
+        indexData: "",
+        countryData: "",
+        regionData: "",
+        cityData: null,
+        streetData: "",
+        houseData: "",
+        doctypeData: null,
+        serieData: "",
+        numberData: "",
+        issuedByData: "",
+        issuedDateData: null,
+      },
     };
   },
   methods: {
-    createdClient(e) {
+    createdClient() {
       let isUserDataValid = this.$refs.UserData.checkUserData(),
         isAddressDataValid = this.$refs.AddressData.checkAddressData(),
         isPasportDataValid = this.$refs.PasportData.checkPasportData();
@@ -48,6 +80,12 @@ export default {
 
         this.isValidForm = true;
         this.defValidForm(true);
+
+        this.steps = {
+          1: true,
+          2: false,
+          3: false,
+        };
 
         setTimeout(() => {
           this.isValidForm = null;
@@ -76,12 +114,23 @@ export default {
         return false;
       }
     },
+    addToFormData(data) {
+      this.formData = Object.assign(this.formData, data);
+    },
+    changeFormStep(step) {
+      for (let key in this.steps) {
+        if (+key !== step) {
+          this.steps[key] = false;
+        } else {
+          this.steps[key] = true;
+        }
+      }
+    },
   },
   components: {
     UserData,
     AddressData,
     PasportData,
-    InvalidFormTextError,
   },
 };
 </script>

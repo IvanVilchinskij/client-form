@@ -1,11 +1,12 @@
 <template>
   <div class="form__block">
+    <h2 class="form__title"><span>Шаг 1</span> / Личные данные</h2>
     <div class="form__group">
-      <label for="surname">Фамилия<span>*</span></label>
       <input
         name="surname"
         id="surname"
         type="text"
+        placeholder="Фамилия*"
         :class="$v.form.surnameData.$error ? 'is-invalid' : ''"
         v-model.trim="form.surnameData"
         @blur="$v.form.surnameData.$touch()"
@@ -16,11 +17,11 @@
       />
     </div>
     <div class="form__group">
-      <label for="name">Имя<span>*</span></label>
       <input
         name="name"
         id="name"
         type="text"
+        placeholder="Имя*"
         :class="$v.form.nameData.$error ? 'is-invalid' : ''"
         v-model.trim="form.nameData"
         @blur="$v.form.nameData.$touch()"
@@ -31,17 +32,17 @@
       />
     </div>
     <div class="form__group">
-      <label for="patronymic">Отчество</label>
       <input
         name="patronymic"
         id="patronymic"
         type="text"
+        placeholder="Отчество"
         v-model.trim="form.patronymicData"
         @keypress="noNumber($event)"
       />
     </div>
     <div class="form__group">
-      <label for="birthday">Дата рождения<span>*</span></label>
+      <label for="birthday">Дата рождения*</label>
       <input
         name="birthday"
         id="birthday"
@@ -55,14 +56,15 @@
       />
     </div>
     <div class="form__group">
-      <label for="tel">Номер телефона</label>
       <input
         name="tel"
         id="tel"
         type="text"
+        placeholder="Телефон"
         :class="$v.form.telData.$error ? 'is-invalid' : ''"
         v-model.trim="form.telData"
         @keypress="onlyNumber($event)"
+        @click="addFirstNumber($event)"
         @blur="$v.form.telData.$touch()"
       />
       <MinLengthTextError
@@ -73,9 +75,7 @@
       />
     </div>
     <div class="form__group">
-      <label>Пол</label>
       <div class="form__group-radio">
-        <label for="male">Мужчина</label>
         <input
           name="gendere"
           id="male"
@@ -83,7 +83,7 @@
           value="male"
           v-model="form.gendere"
         />
-        <label for="female">Женщина</label>
+        <label for="male">Мужчина</label>
         <input
           name="gendere"
           id="female"
@@ -91,10 +91,11 @@
           value="female"
           v-model="form.gendere"
         />
+        <label for="female">Женщина</label>
       </div>
     </div>
     <div class="form__group">
-      <label for="clients">Группа клиентов<span>*</span></label>
+      <label for="clients">Группа клиентов*</label>
       <select
         name="clients"
         id="clients"
@@ -120,8 +121,12 @@
       </select>
     </div>
     <div class="form__group form__group--sms">
-      <label for="SMS">не отправлять СМС</label>
       <input name="SMS" id="SMS" type="checkbox" v-model="form.agreeSMS" />
+      <label for="SMS">Не отправлять СМС</label>
+    </div>
+    <p class="form__sub-text">* - поля обязательные для заполнения</p>
+    <div class="form__bottom">
+      <button @click.prevent="nextStep" class="form__next">Далее</button>
     </div>
   </div>
 </template>
@@ -136,6 +141,8 @@ export default {
   props: {
     onlyNumber: Function,
     noNumber: Function,
+    addToFormData: Function,
+    changeFormStep: Function,
   },
   mixins: [validationMixin],
   data() {
@@ -145,12 +152,13 @@ export default {
         nameData: null,
         patronymicData: "",
         birthdayData: null,
-        telData: "7",
+        telData: "",
         doctorData: "",
         clientData: [],
         agreeSMS: false,
         gendere: "male",
       },
+      isChangeColorDate: false,
       doctors: [
         {
           label: "Иванов",
@@ -202,13 +210,20 @@ export default {
     },
   },
   methods: {
+    addFirstNumber(e) {
+      const target = e.target;
+
+      if (target.value.length === 0) {
+        this.form.telData = 7;
+      }
+    },
     checkUserData(isValidForm = false) {
       if (isValidForm) {
         this.form.surnameData = null;
         this.form.nameData = null;
         this.form.patronymicData = "";
         this.form.birthdayData = null;
-        this.form.telData = "7";
+        this.form.telData = "";
         this.form.doctorData = "";
         this.form.clientData = [];
         this.form.agreeSMS = false;
@@ -239,7 +254,14 @@ export default {
         }
       }
     },
+    nextStep() {
+      if (this.checkUserData()) {
+        this.addToFormData(this.form);
+        this.changeFormStep(2);
+      }
+    },
   },
+
   components: {
     RequiredTextError,
     MinLengthTextError,

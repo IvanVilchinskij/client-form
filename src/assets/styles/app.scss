@@ -1,79 +1,74 @@
 * {
     box-sizing: border-box;
   }
-  
-  #app {
-    font-family: "Roboto", Helvetica, Arial, sans-serif;
+
+#app {
+    font-family: "Jost", Helvetica, Arial, sans-serif;
     width: 100%;
     min-height: 100vh;
     overflow: hidden;
-  
     position: relative;
-  }
-  
-  .container {
-    max-width: 87.5rem;
-    margin: 0 auto;
-    padding: 0 2rem;
+}
 
-    @media (max-width: 575px) {
-        padding: 0 .85rem ;
-    }
-  }
-  
-  .bg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+.content {
+    position: relative;
     width: 100%;
-    height: 100%;
-  
-    filter: blur(5px) brightness(70%);
-  }
-  
-  .title {
-    position: relative;
-    font-size: 2rem;
-    line-height: 90%;
-    font-weight: bold;
-    color: $main-title-color;
-    width: 35rem;
-    margin: 4rem auto 2rem;
+    min-height: 100vh;
 
-    @media (max-width: 767px) {
-        font-size: 1.75rem;
-        margin: 3rem auto 1rem;
-        width: 100%;
+    .client-form {
+        position: relative;
+        z-index: 1;
+        width: 50%;
+        background-color: #fff;
+        padding: calc( 70 * 100vw/1440) calc( 34 * 100vw/1440) calc( 70 * 100vw/1440)  calc(140 *100vw/1440);
+
+        @media (max-width: 991px) {
+            width: 100%;
+            padding: 4.375rem;
+        }
+
+        @media (max-width: 767px) {
+            padding: 1.875rem;
+        }
+
+        @media (max-width: 575px) {
+            padding: 1.875rem .9375rem;
+        }
+        
+        &__title {
+            color: $text-color;
+            font-weight: 600;
+            font-size: 2rem;
+            line-height: 128%;
+            margin-bottom: 1em;
+
+            @media (min-width: 1921px) {
+                font-size: calc(2 * 16 * 100vw/1440);
+            }
+
+            @media (max-width: 575px) {
+                font-size: 1.5rem;
+            }
+        }
     }
 
-    @media (max-width: 575px) {
-        font-size: 1.5rem;
-        margin: 1.5rem auto .75rem;
-    }
-  }
-  
-  .client-form {
-    font-size: 1rem;
-    font-weight: 300;
-    position: relative;
-    z-index: 10;
-    width: 35rem;
-    margin: 0 auto 2rem;
-    padding: 2em;
-    border: 1px solid $boreder-color;
-    border-radius: 0.3125rem;
-    color: $text-color;
-    background-color: $substr-color;
+    .bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50%;
+        height: 100%;
 
-    @media (max-width: 767px) {
-        width: 100%;
-        margin: 0 auto 1rem;
+        @media (max-width: 991px) {
+            display: none;
+        }
+        
+        img {
+            display: block;
+            width: 100%;
+            min-height: 100%;
+            opacity: .8;
+            object-fit: cover;
+        }
     }
-
-    @media (max-width: 575px) {
-        font-size: 0.5rem;
-    }
-  }
+}

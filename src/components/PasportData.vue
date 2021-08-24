@@ -1,7 +1,8 @@
 <template>
   <div class="form__block">
+    <h2 class="form__title"><span>Шаг 3</span> / Паспорт</h2>
     <div class="form__group">
-      <label for="doctype">Тип документа<span>*</span></label>
+      <label for="doctype">Тип документа*</label>
       <select
         name="doctype"
         id="doctype"
@@ -9,7 +10,7 @@
         :class="$v.form.doctypeData.$error ? 'is-invalid' : ''"
         @blur="$v.form.doctypeData.$touch()"
       >
-        <option v-for="(item, i) in doctypes" :key="i" value="item.value">
+        <option v-for="(item, i) in doctypes" :key="i" :value="item.value">
           {{ item.label }}
         </option>
       </select>
@@ -18,36 +19,36 @@
       />
     </div>
     <div class="form__group">
-      <label for="serie">Серия</label>
       <input
         name="serie"
         id="serie"
         type="text"
+        placeholder="Серия"
         v-model.trim="form.serieData"
         @keypress="onlyNumber($event)"
       />
     </div>
     <div class="form__group">
-      <label for="number">Номер</label>
       <input
         name="number"
         id="number"
         type="text"
+        placeholder="Номер"
         v-model.trim="form.numberData"
         @keypress="onlyNumber($event)"
       />
     </div>
     <div class="form__group">
-      <label for="issued-by">Кем выдан</label>
       <input
         name="issued-by"
         id="issued-by"
         type="text"
+        placeholder="Кем выдан"
         v-model.trim="form.issuedByData"
       />
     </div>
     <div class="form__group">
-      <label for="issued-date">Дата выдачи<span>*</span></label>
+      <label for="issued-date">Дата выдачи*</label>
       <input
         name="issued-date"
         id="issued-date"
@@ -60,6 +61,17 @@
         v-if="$v.form.issuedDateData.$dirty && !$v.form.issuedDateData.required"
       />
     </div>
+    <p class="form__sub-text">* - поля обязательные для заполнения</p>
+
+    <div class="form__bottom">
+      <button @click.prevent="prevStep" class="form__prev">Назад</button>
+      <button type="submit" @click="addToFormData(form)" class="form__btn">
+        Готово
+      </button>
+      <InvalidFormTextError
+        v-if="isValidForm === null ? false : !isValidForm"
+      />
+    </div>
   </div>
 </template>
 
@@ -67,11 +79,15 @@
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
 import RequiredTextError from "./RequiredTextError";
+import InvalidFormTextError from "../components/InvalidFormTextError";
 
 export default {
   props: {
     onlyNumber: Function,
     noNumber: Function,
+    isValidForm: Boolean,
+    addToFormData: Function,
+    changeFormStep: Function,
   },
   mixins: [validationMixin],
   data() {
@@ -136,9 +152,13 @@ export default {
         }
       }
     },
+    prevStep() {
+      this.changeFormStep(2);
+    },
   },
   components: {
     RequiredTextError,
+    InvalidFormTextError,
   },
 };
 </script>
